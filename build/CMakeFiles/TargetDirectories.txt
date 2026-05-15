@@ -1,0 +1,3 @@
+/home/rjaradat/Projects/JAM/v-0.1-machine-code/build/CMakeFiles/JAM.dir
+/home/rjaradat/Projects/JAM/v-0.1-machine-code/build/CMakeFiles/edit_cache.dir
+/home/rjaradat/Projects/JAM/v-0.1-machine-code/build/CMakeFiles/rebuild_cache.dir
