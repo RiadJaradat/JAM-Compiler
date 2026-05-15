@@ -3,7 +3,8 @@
 #include <cstdint>
 #include <vector>
 
-const std::vector<uint8_t> ELF = {
+namespace mc {
+inline static const std::vector<uint8_t> ELF = {
     0x7F, 'E',  'L',  'F',  0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00,
 
@@ -23,3 +24,4 @@ inline static const uint8_t MOV_EAX = 0xB8;
 inline static const uint8_t MOV_EDI = 0xBF;
 inline static const uint8_t SYSCALL_1 = 0x0F;
 inline static const uint8_t SYSCALL_2 = 0x05;
+} // namespace mc
