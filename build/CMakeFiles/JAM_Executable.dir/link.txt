@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/JAM_Executable.dir/link.d CMakeFiles/JAM_Executable.dir/src/JAM.cpp.o -o JAM_Executable

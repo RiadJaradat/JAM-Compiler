@@ -1,0 +1,85 @@
+A **Program Header** is an essential component of an Executable and Linkable Format (ELF) binary. While the **ELF Header** acts as the file's identifier and table of contents, the **Program Header** acts as a roadmap for the operating system's kernel loader.
+
+It explicitly tells Linux how to map the file's binary data into virtual memory, what memory addresses to use, and what permissions (Read, Write, Execute) those memory segments should have.
+
+Without a program header, the operating system might recognize the file as an ELF binary, but it won't know how to actually load and execute its code.
+
+---
+
+### The Big Picture: How It Fits Together
+
+When you run a binary on Linux, the kernel looks at two main structures before running your actual code:
+
+1. **ELF Header (64 bytes):** "Hello, I am a 64-bit, Little-Endian executable for x86_64, and my program header map starts right after me at byte 64."
+2. **Program Header (56 bytes):** "Take the bytes located at file offset `0x78`, load them into virtual memory address `0x400078`, make that memory readable and executable, and then hand control over to the CPU."
+
+---
+
+### Inside a 64-bit Program Header
+
+For a 64-bit ELF binary, a single program header entry is exactly **56 bytes** long. It consists of 8 specific fields.
+
+If you want to append this to your `std::vector<uint8_t>` framework, you will need to implement these fields in Little-Endian byte order:
+
+#### 1. `p_type` (4 bytes) — Segment Type
+
+Tells the OS what to do with this segment. For a bare-minimum executable, you use `PT_LOAD` (`0x00000001`). This tells the kernel: *"Take this chunk of the file and load it into memory."*
+
+* **Value:** `{0x01, 0x00, 0x00, 0x00}`
+
+#### 2. `p_flags` (4 bytes) — Access Permissions
+
+Defines the CPU permissions for this memory area using a bitmask: `1` for Execute (X), `2` for Write (W), and `4` for Read (R). For a segment containing code, you want Read + Execute ($4 + 1 = 5$).
+
+* **Value:** `{0x05, 0x00, 0x00, 0x00}`
+
+#### 3. `p_offset` (8 bytes) — File Offset
+
+The exact byte offset in your file where this segment's data begins. Since your ELF header is 64 bytes and your single Program Header is 56 bytes, your actual code starts exactly at byte 120 (`0x78`).
+
+* **Value:** `{0x78, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}`
+
+#### 4. `p_vaddr` (8 bytes) — Virtual Address
+
+The memory address where this segment should be placed in virtual memory. A standard base address for custom 64-bit binaries is `0x400000`. Because your code is offset by `0x78` bytes in the file, it is common practice to match that alignment in memory, placing it at `0x400078`.
+
+* **Value:** `{0x78, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00}`
+
+#### 5. `p_paddr` (8 bytes) — Physical Address
+
+Reserved for systems that use physical addressing directly (like embedded systems). On modern desktop Linux, this is ignored.
+
+* **Value:** All zeros `{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}`
+
+#### 6. `p_filesz` (8 bytes) — Segment Size in File
+
+How many bytes of machine code data you are reading from the binary file. For example, if your assembly code payload is 7 bytes long, this value is 7.
+
+* **Value:** `{0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}`
+
+#### 7. `p_memsz` (8 bytes) — Segment Size in Memory
+
+How much space to allocate in virtual memory. Usually, this matches `p_filesz` exactly. (If `p_memsz` is larger than `p_filesz`, the OS pads the extra memory space with zeros, which is how uninitialized `.bss` data sections are created).
+
+* **Value:** `{0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}`
+
+#### 8. `p_align` (8 bytes) — Alignment
+
+The alignment requirements for the segment in memory (usually a power of 2, like `0x1000` or 4096 bytes, which represents a standard CPU memory page size).
+
+* **Value:** `{0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}`
+
+---
+
+### Summary Layout for Your Code
+
+If you add a `ProgramHeader` class or function to your project, you would create a 56-byte vector containing these fields sequentially.
+
+When generating your final `code.bin` file, your compilation flow will simply be:
+
+```text
+[ 64 Bytes: ELF Header ] + [ 56 Bytes: Program Header ] + [ X Bytes: Your Machine Code ]
+
+```
+
+This forces your machine code directly to file offset `0x78`, completing a fully functional, self-contained binary execution structure.

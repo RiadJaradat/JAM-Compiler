@@ -129,29 +129,66 @@ JAM/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/JAM.dir/build.make CMakeFiles/JAM.dir/build
 .PHONY : JAM/fast
 
-src/main.o: src/main.cpp.o
-.PHONY : src/main.o
+#=============================================================================
+# Target rules for targets named JLD
+
+# Build rule for target.
+JLD: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 JLD
+.PHONY : JLD
+
+# fast build rule for target.
+JLD/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JLD.dir/build.make CMakeFiles/JLD.dir/build
+.PHONY : JLD/fast
+
+src/JAM.o: src/JAM.cpp.o
+.PHONY : src/JAM.o
 
 # target to build an object file
-src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/JAM.dir/build.make CMakeFiles/JAM.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
+src/JAM.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JAM.dir/build.make CMakeFiles/JAM.dir/src/JAM.cpp.o
+.PHONY : src/JAM.cpp.o
 
-src/main.i: src/main.cpp.i
-.PHONY : src/main.i
+src/JAM.i: src/JAM.cpp.i
+.PHONY : src/JAM.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/JAM.dir/build.make CMakeFiles/JAM.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+src/JAM.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JAM.dir/build.make CMakeFiles/JAM.dir/src/JAM.cpp.i
+.PHONY : src/JAM.cpp.i
 
-src/main.s: src/main.cpp.s
-.PHONY : src/main.s
+src/JAM.s: src/JAM.cpp.s
+.PHONY : src/JAM.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/JAM.dir/build.make CMakeFiles/JAM.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+src/JAM.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JAM.dir/build.make CMakeFiles/JAM.dir/src/JAM.cpp.s
+.PHONY : src/JAM.cpp.s
+
+src/JLD.o: src/JLD.cpp.o
+.PHONY : src/JLD.o
+
+# target to build an object file
+src/JLD.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JLD.dir/build.make CMakeFiles/JLD.dir/src/JLD.cpp.o
+.PHONY : src/JLD.cpp.o
+
+src/JLD.i: src/JLD.cpp.i
+.PHONY : src/JLD.i
+
+# target to preprocess a source file
+src/JLD.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JLD.dir/build.make CMakeFiles/JLD.dir/src/JLD.cpp.i
+.PHONY : src/JLD.cpp.i
+
+src/JLD.s: src/JLD.cpp.s
+.PHONY : src/JLD.s
+
+# target to generate assembly for a file
+src/JLD.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JLD.dir/build.make CMakeFiles/JLD.dir/src/JLD.cpp.s
+.PHONY : src/JLD.cpp.s
 
 # Help Target
 help:
@@ -162,9 +199,13 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... JAM"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... JLD"
+	@echo "... src/JAM.o"
+	@echo "... src/JAM.i"
+	@echo "... src/JAM.s"
+	@echo "... src/JLD.o"
+	@echo "... src/JLD.i"
+	@echo "... src/JLD.s"
 .PHONY : help
 
 

@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/rjaradat/Projects/JAM/v-0.1-machine-code/src/JAM.cpp" "CMakeFiles/JAM.dir/src/JAM.cpp.o" "gcc" "CMakeFiles/JAM.dir/src/JAM.cpp.o.d"
-  "" "JAM" "gcc" "CMakeFiles/JAM.dir/link.d"
+  "/home/rjaradat/Projects/JAM/v-0.1-machine-code/src/JLD.cpp" "CMakeFiles/JLD.dir/src/JLD.cpp.o" "gcc" "CMakeFiles/JLD.dir/src/JLD.cpp.o.d"
+  "" "JLD" "gcc" "CMakeFiles/JLD.dir/link.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

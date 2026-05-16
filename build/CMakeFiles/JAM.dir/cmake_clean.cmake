@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/JAM.dir/link.d"
-  "CMakeFiles/JAM.dir/src/main.cpp.o"
-  "CMakeFiles/JAM.dir/src/main.cpp.o.d"
+  "CMakeFiles/JAM.dir/src/JAM.cpp.o"
+  "CMakeFiles/JAM.dir/src/JAM.cpp.o.d"
   "JAM"
   "JAM.pdb"
 )

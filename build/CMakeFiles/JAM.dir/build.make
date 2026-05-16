@@ -72,28 +72,28 @@ include CMakeFiles/JAM.dir/flags.make
 CMakeFiles/JAM.dir/codegen:
 .PHONY : CMakeFiles/JAM.dir/codegen
 
-CMakeFiles/JAM.dir/src/main.cpp.o: CMakeFiles/JAM.dir/flags.make
-CMakeFiles/JAM.dir/src/main.cpp.o: /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/main.cpp
-CMakeFiles/JAM.dir/src/main.cpp.o: CMakeFiles/JAM.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/rjaradat/Projects/JAM/v-0.1-machine-code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/JAM.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JAM.dir/src/main.cpp.o -MF CMakeFiles/JAM.dir/src/main.cpp.o.d -o CMakeFiles/JAM.dir/src/main.cpp.o -c /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/main.cpp
+CMakeFiles/JAM.dir/src/JAM.cpp.o: CMakeFiles/JAM.dir/flags.make
+CMakeFiles/JAM.dir/src/JAM.cpp.o: /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/JAM.cpp
+CMakeFiles/JAM.dir/src/JAM.cpp.o: CMakeFiles/JAM.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/rjaradat/Projects/JAM/v-0.1-machine-code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/JAM.dir/src/JAM.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JAM.dir/src/JAM.cpp.o -MF CMakeFiles/JAM.dir/src/JAM.cpp.o.d -o CMakeFiles/JAM.dir/src/JAM.cpp.o -c /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/JAM.cpp
 
-CMakeFiles/JAM.dir/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JAM.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/main.cpp > CMakeFiles/JAM.dir/src/main.cpp.i
+CMakeFiles/JAM.dir/src/JAM.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JAM.dir/src/JAM.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/JAM.cpp > CMakeFiles/JAM.dir/src/JAM.cpp.i
 
-CMakeFiles/JAM.dir/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JAM.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/main.cpp -o CMakeFiles/JAM.dir/src/main.cpp.s
+CMakeFiles/JAM.dir/src/JAM.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JAM.dir/src/JAM.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/JAM.cpp -o CMakeFiles/JAM.dir/src/JAM.cpp.s
 
 # Object files for target JAM
 JAM_OBJECTS = \
-"CMakeFiles/JAM.dir/src/main.cpp.o"
+"CMakeFiles/JAM.dir/src/JAM.cpp.o"
 
 # External object files for target JAM
 JAM_EXTERNAL_OBJECTS =
 
-JAM: CMakeFiles/JAM.dir/src/main.cpp.o
+JAM: CMakeFiles/JAM.dir/src/JAM.cpp.o
 JAM: CMakeFiles/JAM.dir/build.make
 JAM: CMakeFiles/JAM.dir/compiler_depend.ts
 JAM: CMakeFiles/JAM.dir/link.txt

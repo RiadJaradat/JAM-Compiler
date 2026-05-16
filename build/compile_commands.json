@@ -1,8 +1,14 @@
 [
 {
   "directory": "/home/rjaradat/Projects/JAM/v-0.1-machine-code/build",
-  "command": "/usr/bin/c++  -I/home/rjaradat/Projects/JAM/v-0.1-machine-code/include -std=gnu++17 -o CMakeFiles/JAM.dir/src/main.cpp.o -c /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/main.cpp",
-  "file": "/home/rjaradat/Projects/JAM/v-0.1-machine-code/src/main.cpp",
-  "output": "CMakeFiles/JAM.dir/src/main.cpp.o"
+  "command": "/usr/bin/c++  -I/home/rjaradat/Projects/JAM/v-0.1-machine-code/include -std=gnu++17 -o CMakeFiles/JAM.dir/src/JAM.cpp.o -c /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/JAM.cpp",
+  "file": "/home/rjaradat/Projects/JAM/v-0.1-machine-code/src/JAM.cpp",
+  "output": "CMakeFiles/JAM.dir/src/JAM.cpp.o"
+},
+{
+  "directory": "/home/rjaradat/Projects/JAM/v-0.1-machine-code/build",
+  "command": "/usr/bin/c++  -I/home/rjaradat/Projects/JAM/v-0.1-machine-code/include -std=gnu++17 -o CMakeFiles/JLD.dir/src/JLD.cpp.o -c /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/JLD.cpp",
+  "file": "/home/rjaradat/Projects/JAM/v-0.1-machine-code/src/JLD.cpp",
+  "output": "CMakeFiles/JLD.dir/src/JLD.cpp.o"
 }
 ]

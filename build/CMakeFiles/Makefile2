@@ -64,10 +64,12 @@ CMAKE_BINARY_DIR = /home/rjaradat/Projects/JAM/v-0.1-machine-code/build
 
 # The main recursive "all" target.
 all: CMakeFiles/JAM.dir/all
+all: CMakeFiles/JLD.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/JAM.dir/codegen
+codegen: CMakeFiles/JLD.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -76,6 +78,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/JAM.dir/clean
+clean: CMakeFiles/JLD.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -109,6 +112,38 @@ CMakeFiles/JAM.dir/codegen:
 CMakeFiles/JAM.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/JAM.dir/build.make CMakeFiles/JAM.dir/clean
 .PHONY : CMakeFiles/JAM.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/JLD.dir
+
+# All Build rule for target.
+CMakeFiles/JLD.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JLD.dir/build.make CMakeFiles/JLD.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JLD.dir/build.make CMakeFiles/JLD.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/rjaradat/Projects/JAM/v-0.1-machine-code/build/CMakeFiles --progress-num=3,4 "Built target JLD"
+.PHONY : CMakeFiles/JLD.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/JLD.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/rjaradat/Projects/JAM/v-0.1-machine-code/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/JLD.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/rjaradat/Projects/JAM/v-0.1-machine-code/build/CMakeFiles 0
+.PHONY : CMakeFiles/JLD.dir/rule
+
+# Convenience name for target.
+JLD: CMakeFiles/JLD.dir/rule
+.PHONY : JLD
+
+# codegen rule for target.
+CMakeFiles/JLD.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JLD.dir/build.make CMakeFiles/JLD.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/rjaradat/Projects/JAM/v-0.1-machine-code/build/CMakeFiles --progress-num=3,4 "Finished codegen for target JLD"
+.PHONY : CMakeFiles/JLD.dir/codegen
+
+# clean rule for target.
+CMakeFiles/JLD.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JLD.dir/build.make CMakeFiles/JLD.dir/clean
+.PHONY : CMakeFiles/JLD.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -7,12 +7,21 @@ project(JAM)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(${PROJECT_NAME}
+# First executable
+add_executable(JAM
     src/JAM.cpp
+)
+
+# Second executable
+add_executable(JLD
     src/JLD.cpp
 )
 
-# Add include directory
-target_include_directories(${PROJECT_NAME} PRIVATE
+# Include directory for both executables
+target_include_directories(JAM PRIVATE
+    include
+)
+
+target_include_directories(JLD PRIVATE
     include
 )
