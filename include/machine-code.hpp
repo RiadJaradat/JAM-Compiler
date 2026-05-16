@@ -1,8 +1,8 @@
 #pragma once
 
 #include <cstdint>
-#include <vector>
 #include <stdexcept>
+#include <vector>
 
 namespace mc {
 inline static const std::vector<uint8_t> ELF_hardcoded = {
@@ -23,6 +23,8 @@ inline static const std::vector<uint8_t> ELF_hardcoded = {
 
 inline static const uint8_t MOV_EAX = 0xB8;
 inline static const uint8_t MOV_EDI = 0xBF;
+inline static const uint8_t MOV_ESI = 0xBE;
+inline static const uint8_t MOV_EDX = 0xBA;
 inline static const uint8_t SYSCALL_1 = 0x0F;
 inline static const uint8_t SYSCALL_2 = 0x05;
 
