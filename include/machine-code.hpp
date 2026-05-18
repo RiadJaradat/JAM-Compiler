@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <stdexcept>
 #include <vector>
@@ -46,6 +47,10 @@ std::vector<uint8_t> num_to_bytes(T value, size_t num_bytes) {
   }
 
   return bytes;
+}
+
+inline static size_t memo_place(size_t offset, int start_size = 0x400000) {
+  return start_size + mc::linux_header_size + offset;
 }
 
 typedef std::vector<uint8_t> machine_code;

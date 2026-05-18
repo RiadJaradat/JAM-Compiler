@@ -91,6 +91,7 @@ CMakeFiles/JAM.dir/src/JAM.cpp.o: /home/rjaradat/Projects/JAM/v-0.1-machine-code
   /usr/include/c++/15/bits/cpp_type_traits.h \
   /usr/include/c++/15/bits/cxxabi_forced.h \
   /usr/include/c++/15/bits/cxxabi_init_exception.h \
+  /usr/include/c++/15/bits/erase_if.h \
   /usr/include/c++/15/bits/exception.h \
   /usr/include/c++/15/bits/exception_defines.h \
   /usr/include/c++/15/bits/exception_ptr.h \
@@ -111,6 +112,7 @@ CMakeFiles/JAM.dir/src/JAM.cpp.o: /home/rjaradat/Projects/JAM/v-0.1-machine-code
   /usr/include/c++/15/bits/move.h \
   /usr/include/c++/15/bits/nested_exception.h \
   /usr/include/c++/15/bits/new_allocator.h \
+  /usr/include/c++/15/bits/node_handle.h \
   /usr/include/c++/15/bits/ostream.h \
   /usr/include/c++/15/bits/ostream.tcc \
   /usr/include/c++/15/bits/ostream_insert.h \
@@ -128,9 +130,13 @@ CMakeFiles/JAM.dir/src/JAM.cpp.o: /home/rjaradat/Projects/JAM/v-0.1-machine-code
   /usr/include/c++/15/bits/stl_iterator.h \
   /usr/include/c++/15/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/15/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15/bits/stl_map.h \
+  /usr/include/c++/15/bits/stl_multimap.h \
   /usr/include/c++/15/bits/stl_pair.h \
+  /usr/include/c++/15/bits/stl_tree.h \
   /usr/include/c++/15/bits/stl_uninitialized.h \
   /usr/include/c++/15/bits/stl_vector.h \
+  /usr/include/c++/15/bits/stream_iterator.h \
   /usr/include/c++/15/bits/streambuf.tcc \
   /usr/include/c++/15/bits/streambuf_iterator.h \
   /usr/include/c++/15/bits/string_view.tcc \
@@ -153,6 +159,7 @@ CMakeFiles/JAM.dir/src/JAM.cpp.o: /home/rjaradat/Projects/JAM/v-0.1-machine-code
   /usr/include/c++/15/debug/assertions.h \
   /usr/include/c++/15/debug/debug.h \
   /usr/include/c++/15/exception \
+  /usr/include/c++/15/ext/aligned_buffer.h \
   /usr/include/c++/15/ext/alloc_traits.h \
   /usr/include/c++/15/ext/atomicity.h \
   /usr/include/c++/15/ext/numeric_traits.h \
@@ -164,6 +171,8 @@ CMakeFiles/JAM.dir/src/JAM.cpp.o: /home/rjaradat/Projects/JAM/v-0.1-machine-code
   /usr/include/c++/15/iosfwd \
   /usr/include/c++/15/iostream \
   /usr/include/c++/15/istream \
+  /usr/include/c++/15/iterator \
+  /usr/include/c++/15/map \
   /usr/include/c++/15/new \
   /usr/include/c++/15/ostream \
   /usr/include/c++/15/pstl/pstl_config.h \
@@ -270,8 +279,6 @@ JAM: /lib64/ld-linux-x86-64.so.2 \
 
 /usr/include/stdlib.h:
 
-/usr/include/stdio.h:
-
 /usr/include/sched.h:
 
 /usr/include/locale.h:
@@ -330,6 +337,8 @@ JAM: /lib64/ld-linux-x86-64.so.2 \
 
 /usr/include/c++/15/ext/alloc_traits.h:
 
+/usr/include/c++/15/ext/aligned_buffer.h:
+
 /usr/include/c++/15/exception:
 
 /usr/include/c++/15/debug/debug.h:
@@ -354,11 +363,23 @@ JAM: /lib64/ld-linux-x86-64.so.2 \
 
 /usr/include/c++/15/bits/stl_vector.h:
 
+/usr/include/c++/15/bits/stl_tree.h:
+
 /usr/include/c++/15/cctype:
 
 /usr/include/c++/15/bits/stl_pair.h:
 
-/usr/include/bits/types/struct_FILE.h:
+/usr/include/stdio.h:
+
+/usr/include/c++/15/bits/stl_multimap.h:
+
+/usr/include/c++/15/bits/stl_map.h:
+
+/usr/include/c++/15/bits/stl_iterator_base_types.h:
+
+/usr/include/c++/15/ext/atomicity.h:
+
+/usr/include/c++/15/bits/stl_iterator_base_funcs.h:
 
 /usr/include/asm/types.h:
 
@@ -398,6 +419,8 @@ JAM: /lib64/ld-linux-x86-64.so.2 \
 
 /usr/include/bits/thread-shared-types.h:
 
+/usr/include/c++/15/iterator:
+
 /usr/include/bits/types/time_t.h:
 
 /usr/include/bits/types/sigset_t.h:
@@ -434,10 +457,6 @@ JAM: /lib64/ld-linux-x86-64.so.2 \
 
 /usr/include/bits/time.h:
 
-/usr/include/asm/posix_types.h:
-
-/usr/include/c++/15/bits/alloc_traits.h:
-
 /usr/include/wchar.h:
 
 /usr/include/c++/15/bits/ios_base.h:
@@ -453,8 +472,6 @@ JAM: /lib64/ld-linux-x86-64.so.2 \
 /usr/include/bits/types/__sigset_t.h:
 
 /usr/include/c++/15/bits/allocator.h:
-
-/usr/include/c++/15/bits/stl_iterator_base_types.h:
 
 /usr/lib64/crt1.o:
 
@@ -534,6 +551,10 @@ JAM: /lib64/ld-linux-x86-64.so.2 \
 
 /usr/include/bits/types/mbstate_t.h:
 
+/usr/include/bits/types/struct_FILE.h:
+
+/usr/include/c++/15/bits/node_handle.h:
+
 /usr/include/c++/15/x86_64-redhat-linux/bits/error_constants.h:
 
 /usr/include/bits/floatn-common.h:
@@ -565,6 +586,8 @@ JAM: /lib64/ld-linux-x86-64.so.2 \
 /usr/include/asm-generic/bitsperlong.h:
 
 /usr/include/bits/wchar.h:
+
+/usr/include/c++/15/bits/stream_iterator.h:
 
 /usr/include/bits/types/wint_t.h:
 
@@ -620,6 +643,12 @@ JAM: /lib64/ld-linux-x86-64.so.2 \
 
 /usr/include/c++/15/bits/basic_string.tcc:
 
+/usr/include/asm/posix_types.h:
+
+/usr/include/c++/15/bits/alloc_traits.h:
+
+/usr/include/c++/15/bits/erase_if.h:
+
 /usr/include/c++/15/fstream:
 
 /usr/include/c++/15/bits/ostream.h:
@@ -627,6 +656,8 @@ JAM: /lib64/ld-linux-x86-64.so.2 \
 /usr/include/asm/bitsperlong.h:
 
 /usr/include/c++/15/bits/charconv.h:
+
+/usr/include/c++/15/map:
 
 /usr/include/c++/15/bits/cxxabi_forced.h:
 
@@ -701,7 +732,3 @@ CMakeFiles/JAM.dir/src/JAM.cpp.o:
 /usr/include/c++/15/bits/range_access.h:
 
 /usr/include/c++/15/bits/stl_construct.h:
-
-/usr/include/c++/15/ext/atomicity.h:
-
-/usr/include/c++/15/bits/stl_iterator_base_funcs.h:
