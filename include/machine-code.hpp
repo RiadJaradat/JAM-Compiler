@@ -26,6 +26,7 @@ inline static const uint8_t MOV_EAX = 0xB8;
 inline static const uint8_t MOV_EDI = 0xBF;
 inline static const uint8_t MOV_ESI = 0xBE;
 inline static const uint8_t MOV_EDX = 0xBA;
+inline static const uint8_t JMP_ADD = 0xE9;
 inline static const uint8_t SYSCALL_1 = 0x0F;
 inline static const uint8_t SYSCALL_2 = 0x05;
 
@@ -47,6 +48,17 @@ std::vector<uint8_t> num_to_bytes(T value, size_t num_bytes) {
   }
 
   return bytes;
+}
+
+template <typename T>
+T bytes_to_num(const std::vector<uint8_t>& bytes) {
+    T value = 0;
+
+    for (size_t i = 0; i < bytes.size(); i++) {
+        value |= static_cast<T>(bytes[i]) << (i * 8);
+    }
+
+    return value;
 }
 
 inline static size_t memo_place(size_t offset, int start_size = 0x400000) {

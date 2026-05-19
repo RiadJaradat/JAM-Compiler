@@ -1,6 +1,8 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
 #include <fstream>
 #include <map>
 #include <vector>
@@ -10,9 +12,10 @@
 namespace helper {
 
 // patches program pointers and sizes
-inline void patch(std::vector<uint8_t> &bytes, std::vector<uint8_t> &data_bytes,
-                  std::map<std::vector<uint8_t>, size_t> &program_table,
+inline void patch(mc::machine_code &bytes, mc::machine_code &data_bytes,
+                  std::map<mc::machine_code, size_t> &program_table,
                   std::map<size_t, size_t> &pointer_and_sizes,
+                  std::map<size_t, size_t> addresses,
                   mc::Header &program_header) {
 
   for (auto &[v, s] : program_table)
@@ -30,6 +33,12 @@ inline void patch(std::vector<uint8_t> &bytes, std::vector<uint8_t> &data_bytes,
     c1++;
   }
 
+  for (auto &[location, target] : addresses) {
+    int32_t rel = target - (location + 4);
+
+    *reinterpret_cast<int32_t *>(&bytes[location]) = rel;
+  }
+
   int file_total_size =
       mc::linux_header_size + bytes.size() + data_bytes.size();
 
@@ -37,17 +46,23 @@ inline void patch(std::vector<uint8_t> &bytes, std::vector<uint8_t> &data_bytes,
   program_header.p_memsz = mc::num_to_bytes<uint64_t>(file_total_size, 8);
 }
 
-inline std::vector<uint8_t> instruction_to_bytes(uint8_t mov_register,
-                                                 int value) {
-  std::vector<uint8_t> res;
+inline mc::machine_code mov(uint8_t mov_register, int value) {
+  mc::machine_code res;
   res.push_back(mov_register);
-  std::vector<uint8_t> number = mc::num_to_bytes(value, 4);
+  mc::machine_code number = mc::num_to_bytes(value, 4);
   res.insert(res.end(), number.begin(), number.end());
   return res;
 }
 
-inline std::vector<uint8_t> string_to_bytes(std::string value) {
-  std::vector<uint8_t> ret;
+inline void jmp(mc::machine_code &bytes, size_t address,
+                std::map<size_t, size_t> &addresses) {
+  bytes.push_back(mc::JMP_ADD);
+  addresses[bytes.size()] = address;
+  bytes.insert(bytes.end(), {0x00, 0x00, 0x00, 0x00});
+}
+
+inline mc::machine_code string_to_bytes(std::string value) {
+  mc::machine_code ret;
 
   for (char c : value)
     ret.push_back(c);
@@ -55,17 +70,17 @@ inline std::vector<uint8_t> string_to_bytes(std::string value) {
   return ret;
 }
 
-inline void __print(std::vector<uint8_t> &bytes,
-                    std::map<std::vector<uint8_t>, size_t> &program_table,
+inline void __print(mc::machine_code &bytes,
+                    std::map<mc::machine_code, size_t> &program_table,
                     std::map<size_t, size_t> &pointer_and_sizes,
                     std::string value) {
-  std::vector<uint8_t> instruction;
+  mc::machine_code instruction;
 
-  instruction = helper::instruction_to_bytes(mc::MOV_EAX, 1);
+  instruction = helper::mov(mc::MOV_EAX, 1);
 
   bytes.insert(bytes.end(), instruction.begin(), instruction.end());
 
-  instruction = helper::instruction_to_bytes(mc::MOV_EDI, 1);
+  instruction = helper::mov(mc::MOV_EDI, 1);
 
   bytes.insert(bytes.end(), instruction.begin(), instruction.end());
 
@@ -80,28 +95,28 @@ inline void __print(std::vector<uint8_t> &bytes,
   program_table[helper::string_to_bytes(value)] = value.size();
 }
 
-inline void __exit(std::vector<uint8_t> &bytes, int exit_code) {
-  std::vector<uint8_t> instruction;
+inline void __exit(mc::machine_code &bytes, int exit_code) {
+  mc::machine_code instruction;
 
-  instruction = instruction_to_bytes(mc::MOV_EAX, 60);
+  instruction = mov(mc::MOV_EAX, 60);
 
   bytes.insert(bytes.end(), instruction.begin(), instruction.end());
 
-  instruction = instruction_to_bytes(mc::MOV_EDI, exit_code);
+  instruction = mov(mc::MOV_EDI, exit_code);
 
   bytes.insert(bytes.end(), instruction.begin(), instruction.end());
 
   bytes.insert(bytes.end(), {mc::SYSCALL_1, mc::SYSCALL_2});
 }
 
-inline std::vector<uint8_t> combin_excutable(mc::ELF &elf,
-                                             mc::Header &program_header,
-                                             mc::machine_code code_bytes,
-                                             mc::machine_code data_bytes) {
-  std::vector<uint8_t> bytes;
+inline mc::machine_code combin_excutable(mc::ELF &elf,
+                                         mc::Header &program_header,
+                                         mc::machine_code code_bytes,
+                                         mc::machine_code data_bytes) {
+  mc::machine_code bytes;
 
-  std::vector<uint8_t> elf_bytes = elf.to_bytes();
-  std::vector<uint8_t> header_bytes = program_header.to_bytes();
+  mc::machine_code elf_bytes = elf.to_bytes();
+  mc::machine_code header_bytes = program_header.to_bytes();
 
   bytes.insert(bytes.end(), elf_bytes.begin(), elf_bytes.end());
   bytes.insert(bytes.end(), header_bytes.begin(), header_bytes.end());
@@ -111,7 +126,7 @@ inline std::vector<uint8_t> combin_excutable(mc::ELF &elf,
   return bytes;
 }
 
-inline void write(std::ofstream &FILE, const std::vector<uint8_t> &BYTES) {
+inline void write(std::ofstream &FILE, const mc::machine_code &BYTES) {
   FILE.write(reinterpret_cast<const char *>(BYTES.data()), BYTES.size());
 }
 
