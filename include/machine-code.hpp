@@ -2,10 +2,12 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <map>
 #include <stdexcept>
 #include <vector>
 
 namespace mc {
+namespace x86_64 {
 inline static const std::vector<uint8_t> ELF_hardcoded = {
     0x7F, 'E',  'L',  'F',  0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00,
@@ -50,19 +52,18 @@ std::vector<uint8_t> num_to_bytes(T value, size_t num_bytes) {
   return bytes;
 }
 
-template <typename T>
-T bytes_to_num(const std::vector<uint8_t>& bytes) {
-    T value = 0;
+template <typename T> T bytes_to_num(const std::vector<uint8_t> &bytes) {
+  T value = 0;
 
-    for (size_t i = 0; i < bytes.size(); i++) {
-        value |= static_cast<T>(bytes[i]) << (i * 8);
-    }
+  for (size_t i = 0; i < bytes.size(); i++) {
+    value |= static_cast<T>(bytes[i]) << (i * 8);
+  }
 
-    return value;
+  return value;
 }
 
 inline static size_t memo_place(size_t offset, int start_size = 0x400000) {
-  return start_size + mc::linux_header_size + offset;
+  return start_size + mc::x86_64::linux_header_size + offset;
 }
 
 typedef std::vector<uint8_t> machine_code;
@@ -200,4 +201,29 @@ public:
     return returned;
   }
 };
+} // namespace x86_64
+
+class generall_emmiter {
+private:
+  std::map<std::vector<uint8_t>, size_t> program_table;
+  std::map<size_t, size_t> ptr_size;
+  std::map<size_t, size_t> Addresses;
+  std::map<std::string, size_t> labels;
+
+public:
+  mc::x86_64::ELF elf;
+  mc::x86_64::Header program_header;
+  mc::x86_64::machine_code code_bytes;
+  mc::x86_64::machine_code data_bytes;
+
+  generall_emmiter() {
+    
+  };
+
+  void genLabel(std::string label_name) {
+    labels[label_name] = code_bytes.size();
+  }
+
+};
+
 } // namespace mc

@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/rjaradat/Projects/JAM/v-0.1-machine-code/include
 
-CXX_FLAGS = -std=gnu++17
+CXX_FLAGS = -std=gnu++23
 

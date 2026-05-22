@@ -114,6 +114,6 @@ int main() {
     std::ofstream file("code.bin", std::ios::binary);
     write_bytes(bytes, file);
     file.close();
-    
+
     return 0;
 }

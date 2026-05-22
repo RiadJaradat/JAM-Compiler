@@ -151,5 +151,6 @@ CMakeFiles/JAM.dir/src/JAM.cpp.o: \
  /usr/include/c++/15/bits/stl_vector.h \
  /usr/include/c++/15/bits/stl_bvector.h \
  /usr/include/c++/15/bits/vector.tcc \
+ /home/rjaradat/Projects/JAM/v-0.1-machine-code/include/front_end.hpp \
  /home/rjaradat/Projects/JAM/v-0.1-machine-code/include/helper.hpp \
  /home/rjaradat/Projects/JAM/v-0.1-machine-code/include/machine-code.hpp

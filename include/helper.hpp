@@ -12,11 +12,11 @@
 namespace helper {
 
 // patches program pointers and sizes
-inline void patch(mc::machine_code &bytes, mc::machine_code &data_bytes,
-                  std::map<mc::machine_code, size_t> &program_table,
+inline void patch(mc::x86_64::machine_code &bytes, mc::x86_64::machine_code &data_bytes,
+                  std::map<mc::x86_64::machine_code, size_t> &program_table,
                   std::map<size_t, size_t> &pointer_and_sizes,
                   std::map<size_t, size_t> addresses,
-                  mc::Header &program_header) {
+                  mc::x86_64::Header &program_header) {
 
   for (auto &[v, s] : program_table)
     data_bytes.insert(data_bytes.end(), v.begin(), v.end());
@@ -25,7 +25,7 @@ inline void patch(mc::machine_code &bytes, mc::machine_code &data_bytes,
   size_t data_offset = 0;
   for (auto &[ptr, size] : pointer_and_sizes) {
     *reinterpret_cast<uint32_t *>(&bytes[ptr]) =
-        mc::memo_place(bytes.size() + data_offset);
+        mc::x86_64::memo_place(bytes.size() + data_offset);
     *reinterpret_cast<uint32_t *>(&bytes[size]) =
         std::next(program_table.begin(), c1)->second;
 
@@ -40,29 +40,29 @@ inline void patch(mc::machine_code &bytes, mc::machine_code &data_bytes,
   }
 
   int file_total_size =
-      mc::linux_header_size + bytes.size() + data_bytes.size();
+      mc::x86_64::linux_header_size + bytes.size() + data_bytes.size();
 
-  program_header.p_filesz = mc::num_to_bytes<uint64_t>(file_total_size, 8);
-  program_header.p_memsz = mc::num_to_bytes<uint64_t>(file_total_size, 8);
+  program_header.p_filesz = mc::x86_64::num_to_bytes<uint64_t>(file_total_size, 8);
+  program_header.p_memsz = mc::x86_64::num_to_bytes<uint64_t>(file_total_size, 8);
 }
 
-inline mc::machine_code mov(uint8_t mov_register, int value) {
-  mc::machine_code res;
+inline mc::x86_64::machine_code mov(uint8_t mov_register, int value) {
+  mc::x86_64::machine_code res;
   res.push_back(mov_register);
-  mc::machine_code number = mc::num_to_bytes(value, 4);
+  mc::x86_64::machine_code number = mc::x86_64::num_to_bytes(value, 4);
   res.insert(res.end(), number.begin(), number.end());
   return res;
 }
 
-inline void jmp(mc::machine_code &bytes, size_t address,
+inline void jmp(mc::x86_64::machine_code &bytes, size_t address,
                 std::map<size_t, size_t> &addresses) {
-  bytes.push_back(mc::JMP_ADD);
+  bytes.push_back(mc::x86_64::JMP_ADD);
   addresses[bytes.size()] = address;
   bytes.insert(bytes.end(), {0x00, 0x00, 0x00, 0x00});
 }
 
-inline mc::machine_code string_to_bytes(std::string value) {
-  mc::machine_code ret;
+inline mc::x86_64::machine_code string_to_bytes(std::string value) {
+  mc::x86_64::machine_code ret;
 
   for (char c : value)
     ret.push_back(c);
@@ -70,53 +70,53 @@ inline mc::machine_code string_to_bytes(std::string value) {
   return ret;
 }
 
-inline void __print(mc::machine_code &bytes,
-                    std::map<mc::machine_code, size_t> &program_table,
+inline void __print(mc::x86_64::machine_code &bytes,
+                    std::map<mc::x86_64::machine_code, size_t> &program_table,
                     std::map<size_t, size_t> &pointer_and_sizes,
                     std::string value) {
-  mc::machine_code instruction;
+  mc::x86_64::machine_code instruction;
 
-  instruction = helper::mov(mc::MOV_EAX, 1);
-
-  bytes.insert(bytes.end(), instruction.begin(), instruction.end());
-
-  instruction = helper::mov(mc::MOV_EDI, 1);
+  instruction = helper::mov(mc::x86_64::MOV_EAX, 1);
 
   bytes.insert(bytes.end(), instruction.begin(), instruction.end());
 
-  bytes.push_back(mc::MOV_ESI);
+  instruction = helper::mov(mc::x86_64::MOV_EDI, 1);
+
+  bytes.insert(bytes.end(), instruction.begin(), instruction.end());
+
+  bytes.push_back(mc::x86_64::MOV_ESI);
   size_t ptr = bytes.size();
   bytes.insert(bytes.end(), {0x00, 0x00, 0x00, 0x00});
-  bytes.push_back(mc::MOV_EDX);
+  bytes.push_back(mc::x86_64::MOV_EDX);
   pointer_and_sizes[ptr] = bytes.size();
   bytes.insert(bytes.end(), {0x00, 0x00, 0x00, 0x00});
-  bytes.insert(bytes.end(), {mc::SYSCALL_1, mc::SYSCALL_2});
+  bytes.insert(bytes.end(), {mc::x86_64::SYSCALL_1, mc::x86_64::SYSCALL_2});
 
   program_table[helper::string_to_bytes(value)] = value.size();
 }
 
-inline void __exit(mc::machine_code &bytes, int exit_code) {
-  mc::machine_code instruction;
+inline void __exit(mc::x86_64::machine_code &bytes, int exit_code) {
+  mc::x86_64::machine_code instruction;
 
-  instruction = mov(mc::MOV_EAX, 60);
-
-  bytes.insert(bytes.end(), instruction.begin(), instruction.end());
-
-  instruction = mov(mc::MOV_EDI, exit_code);
+  instruction = mov(mc::x86_64::MOV_EAX, 60);
 
   bytes.insert(bytes.end(), instruction.begin(), instruction.end());
 
-  bytes.insert(bytes.end(), {mc::SYSCALL_1, mc::SYSCALL_2});
+  instruction = mov(mc::x86_64::MOV_EDI, exit_code);
+
+  bytes.insert(bytes.end(), instruction.begin(), instruction.end());
+
+  bytes.insert(bytes.end(), {mc::x86_64::SYSCALL_1, mc::x86_64::SYSCALL_2});
 }
 
-inline mc::machine_code combin_excutable(mc::ELF &elf,
-                                         mc::Header &program_header,
-                                         mc::machine_code code_bytes,
-                                         mc::machine_code data_bytes) {
-  mc::machine_code bytes;
+inline mc::x86_64::machine_code combin_excutable(mc::x86_64::ELF &elf,
+                                         mc::x86_64::Header &program_header,
+                                         mc::x86_64::machine_code code_bytes,
+                                         mc::x86_64::machine_code data_bytes) {
+  mc::x86_64::machine_code bytes;
 
-  mc::machine_code elf_bytes = elf.to_bytes();
-  mc::machine_code header_bytes = program_header.to_bytes();
+  mc::x86_64::machine_code elf_bytes = elf.to_bytes();
+  mc::x86_64::machine_code header_bytes = program_header.to_bytes();
 
   bytes.insert(bytes.end(), elf_bytes.begin(), elf_bytes.end());
   bytes.insert(bytes.end(), header_bytes.begin(), header_bytes.end());
@@ -126,7 +126,7 @@ inline mc::machine_code combin_excutable(mc::ELF &elf,
   return bytes;
 }
 
-inline void write(std::ofstream &FILE, const mc::machine_code &BYTES) {
+inline void write(std::ofstream &FILE, const mc::x86_64::machine_code &BYTES) {
   FILE.write(reinterpret_cast<const char *>(BYTES.data()), BYTES.size());
 }
 
