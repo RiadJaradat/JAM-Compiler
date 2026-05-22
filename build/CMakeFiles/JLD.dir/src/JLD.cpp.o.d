@@ -1,6 +1,7 @@
 CMakeFiles/JLD.dir/src/JLD.cpp.o: \
  /home/rjaradat/Projects/JAM/v-0.1-machine-code/src/JLD.cpp \
- /usr/include/stdc-predef.h /usr/include/c++/15/cstdint \
+ /usr/include/stdc-predef.h /usr/include/c++/15/iostream \
+ /usr/include/c++/15/bits/requires_hosted.h \
  /usr/include/c++/15/x86_64-redhat-linux/bits/c++config.h \
  /usr/include/bits/wordsize.h \
  /usr/include/c++/15/x86_64-redhat-linux/bits/os_defines.h \
@@ -9,22 +10,17 @@ CMakeFiles/JLD.dir/src/JLD.cpp.o: \
  /usr/include/bits/long-double.h /usr/include/gnu/stubs.h \
  /usr/include/gnu/stubs-64.h \
  /usr/include/c++/15/x86_64-redhat-linux/bits/cpu_defines.h \
- /usr/include/c++/15/pstl/pstl_config.h \
- /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h \
- /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
- /usr/include/bits/types.h /usr/include/bits/typesizes.h \
- /usr/include/bits/time64.h /usr/include/bits/wchar.h \
- /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
- /usr/include/bits/stdint-least.h /usr/include/c++/15/fstream \
- /usr/include/c++/15/bits/requires_hosted.h /usr/include/c++/15/istream \
- /usr/include/c++/15/ios /usr/include/c++/15/iosfwd \
- /usr/include/c++/15/bits/stringfwd.h \
+ /usr/include/c++/15/pstl/pstl_config.h /usr/include/c++/15/ostream \
+ /usr/include/c++/15/bits/ostream.h /usr/include/c++/15/ios \
+ /usr/include/c++/15/iosfwd /usr/include/c++/15/bits/stringfwd.h \
  /usr/include/c++/15/bits/memoryfwd.h /usr/include/c++/15/bits/postypes.h \
  /usr/include/c++/15/cwchar /usr/include/wchar.h \
- /usr/include/bits/floatn.h /usr/include/bits/floatn-common.h \
+ /usr/include/bits/libc-header-start.h /usr/include/bits/floatn.h \
+ /usr/include/bits/floatn-common.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
- /usr/include/bits/types/wint_t.h /usr/include/bits/types/mbstate_t.h \
+ /usr/include/bits/wchar.h /usr/include/bits/types/wint_t.h \
+ /usr/include/bits/types/mbstate_t.h \
  /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
  /usr/include/bits/types/FILE.h /usr/include/bits/types/locale_t.h \
  /usr/include/bits/types/__locale_t.h /usr/include/c++/15/exception \
@@ -49,9 +45,10 @@ CMakeFiles/JLD.dir/src/JLD.cpp.o: \
  /usr/include/c++/15/x86_64-redhat-linux/bits/c++locale.h \
  /usr/include/c++/15/clocale /usr/include/locale.h \
  /usr/include/bits/locale.h /usr/include/c++/15/cctype \
- /usr/include/ctype.h /usr/include/bits/endian.h \
- /usr/include/bits/endianness.h /usr/include/c++/15/bits/ios_base.h \
- /usr/include/c++/15/ext/atomicity.h \
+ /usr/include/ctype.h /usr/include/bits/types.h \
+ /usr/include/bits/typesizes.h /usr/include/bits/time64.h \
+ /usr/include/bits/endian.h /usr/include/bits/endianness.h \
+ /usr/include/c++/15/bits/ios_base.h /usr/include/c++/15/ext/atomicity.h \
  /usr/include/c++/15/x86_64-redhat-linux/bits/gthr.h \
  /usr/include/c++/15/x86_64-redhat-linux/bits/gthr-default.h \
  /usr/include/pthread.h /usr/include/sched.h \
@@ -109,13 +106,13 @@ CMakeFiles/JLD.dir/src/JLD.cpp.o: \
  /usr/include/c++/15/ext/string_conversions.h /usr/include/c++/15/cstdlib \
  /usr/include/stdlib.h /usr/include/bits/waitflags.h \
  /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
- /usr/include/endian.h /usr/include/bits/byteswap.h \
- /usr/include/bits/uintn-identity.h /usr/include/sys/select.h \
- /usr/include/bits/select.h /usr/include/bits/types/sigset_t.h \
- /usr/include/alloca.h /usr/include/bits/stdlib-float.h \
- /usr/include/c++/15/bits/std_abs.h /usr/include/c++/15/cstdio \
- /usr/include/stdio.h /usr/include/bits/types/__fpos_t.h \
- /usr/include/bits/types/__fpos64_t.h \
+ /usr/include/bits/stdint-intn.h /usr/include/endian.h \
+ /usr/include/bits/byteswap.h /usr/include/bits/uintn-identity.h \
+ /usr/include/sys/select.h /usr/include/bits/select.h \
+ /usr/include/bits/types/sigset_t.h /usr/include/alloca.h \
+ /usr/include/bits/stdlib-float.h /usr/include/c++/15/bits/std_abs.h \
+ /usr/include/c++/15/cstdio /usr/include/stdio.h \
+ /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__fpos64_t.h \
  /usr/include/bits/types/struct_FILE.h \
  /usr/include/bits/types/cookie_io_functions_t.h \
  /usr/include/bits/stdio_lim.h /usr/include/c++/15/cerrno \
@@ -139,8 +136,7 @@ CMakeFiles/JLD.dir/src/JLD.cpp.o: \
  /usr/include/c++/15/bits/streambuf_iterator.h \
  /usr/include/c++/15/x86_64-redhat-linux/bits/ctype_inline.h \
  /usr/include/c++/15/bits/locale_facets.tcc \
- /usr/include/c++/15/bits/basic_ios.tcc /usr/include/c++/15/ostream \
- /usr/include/c++/15/bits/ostream.h /usr/include/c++/15/format \
+ /usr/include/c++/15/bits/basic_ios.tcc /usr/include/c++/15/format \
  /usr/include/c++/15/array /usr/include/c++/15/charconv \
  /usr/include/c++/15/limits /usr/include/c++/15/locale \
  /usr/include/c++/15/bits/locale_facets_nonio.h /usr/include/c++/15/ctime \
@@ -152,19 +148,36 @@ CMakeFiles/JLD.dir/src/JLD.cpp.o: \
  /usr/include/c++/15/bits/enable_special_members.h \
  /usr/include/c++/15/span /usr/include/c++/15/bits/monostate.h \
  /usr/include/c++/15/bits/formatfwd.h /usr/include/c++/15/bits/unicode.h \
- /usr/include/c++/15/bits/stl_algo.h \
+ /usr/include/c++/15/cstdint \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/stdint-uintn.h \
+ /usr/include/bits/stdint-least.h /usr/include/c++/15/bits/stl_algo.h \
  /usr/include/c++/15/bits/algorithmfwd.h \
  /usr/include/c++/15/bits/stl_heap.h \
  /usr/include/c++/15/bits/uniform_int_dist.h \
  /usr/include/c++/15/bits/stl_tempbuf.h \
  /usr/include/c++/15/bits/unicode-data.h \
- /usr/include/c++/15/bits/ostream.tcc \
- /usr/include/c++/15/bits/istream.tcc \
+ /usr/include/c++/15/bits/ostream.tcc /usr/include/c++/15/istream \
+ /usr/include/c++/15/bits/istream.tcc /usr/include/c++/15/fstream \
  /usr/include/c++/15/x86_64-redhat-linux/bits/basic_file.h \
  /usr/include/c++/15/x86_64-redhat-linux/bits/c++io.h \
- /usr/include/c++/15/bits/fstream.tcc /usr/include/c++/15/iostream \
+ /usr/include/c++/15/bits/fstream.tcc \
+ /home/rjaradat/Projects/JAM/v-0.1-machine-code/include/front_end.hpp \
+ /home/rjaradat/Projects/JAM/v-0.1-machine-code/include/exception.hpp \
+ /home/rjaradat/Projects/JAM/v-0.1-machine-code/include/machine-code.hpp \
  /usr/include/c++/15/vector /usr/include/c++/15/bits/stl_uninitialized.h \
  /usr/include/c++/15/bits/stl_vector.h \
  /usr/include/c++/15/bits/stl_bvector.h \
- /usr/include/c++/15/bits/vector.tcc \
- /home/rjaradat/Projects/JAM/v-0.1-machine-code/include/machine-code.hpp
+ /usr/include/c++/15/bits/vector.tcc /usr/include/c++/15/functional \
+ /usr/include/c++/15/bits/std_function.h \
+ /usr/include/c++/15/unordered_map \
+ /usr/include/c++/15/bits/unordered_map.h \
+ /usr/include/c++/15/bits/hashtable.h \
+ /usr/include/c++/15/bits/hashtable_policy.h \
+ /usr/include/c++/15/ext/aligned_buffer.h \
+ /usr/include/c++/15/bits/node_handle.h \
+ /usr/include/c++/15/bits/erase_if.h \
+ /usr/include/c++/15/bits/move_only_function.h \
+ /usr/include/c++/15/bits/mofunc_impl.h /usr/include/c++/15/map \
+ /usr/include/c++/15/bits/stl_tree.h /usr/include/c++/15/bits/stl_map.h \
+ /usr/include/c++/15/bits/stl_multimap.h

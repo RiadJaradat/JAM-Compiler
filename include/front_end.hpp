@@ -2,6 +2,7 @@
 
 #include "exception.hpp"
 #include "machine-code.hpp"
+#include <cstddef>
 #include <fstream>
 #include <functional>
 #include <iostream>
@@ -20,7 +21,9 @@ enum TokenType {
   L_BRACKET,
   R_BRACE,
   L_BRACE,
-  COLOMN
+  COLOMN,
+  STRING_LITIRAL,
+  INT_LITIRAL
 };
 
 inline std::vector<std::function<void()>> generationFucntions;
@@ -37,6 +40,17 @@ inline bool isSymbol(char c) {
          c == ';';
 }
 
+inline bool isInteger(const std::string & s)
+{
+   if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
+
+   char * p;
+   strtol(s.c_str(), &p, 10);
+
+   return (*p == 0);
+}
+
+
 class Token {
 public:
   std::string strToken;
@@ -45,13 +59,61 @@ public:
   Token(const std::string &val) : strToken(val) {
     if (Token_Tree.find(val) != Token_Tree.end()) {
       token_type = Token_Tree[val];
+    } else if (val.starts_with('\"') && val.ends_with('\"') || val.starts_with('\'') && val.ends_with('\'')) {
+      token_type = TokenType::STRING_LITIRAL;
+    } else if (isInteger(val)) {
+      token_type = TokenType::INT_LITIRAL;
     } else {
       token_type = TokenType::IDENTIFIER;
     }
   }
 };
 
-typedef std::vector<Token> Token_map;
+// typedef std::vector<Token> Token_map;
+
+class Token_map : public std::vector<Token> {
+
+  public:
+    size_t current_i = 0;
+
+    Token_map(std::vector<Token> &token_map) : std::vector<Token>(token_map) {}
+    Token_map() {}
+
+    Token current() {
+      return (*this)[current_i];
+    }
+
+    Token advance() {
+      current_i++;
+      return (*this)[current_i];
+    }
+
+    Token back() {
+      current_i--;
+      return (*this)[current_i];
+    }
+
+    Token expect(translator::TokenType expected) {
+      current_i++;
+      Token actuall = (*this)[current_i];
+      if (actuall.token_type != expected) {
+        throw CompilerErr("expected token type: " + std::to_string(expected));
+      }
+      return actuall;
+    }
+
+    Token peek(int step) {
+      current_i += step;
+      Token actuall = (*this)[current_i];
+      current_i -= step;
+      return actuall;
+    }
+
+    bool isAtEnd() {
+      return current_i == (*this).size();
+    }
+
+};
 
 inline std::ostream &operator<<(std::ostream &os, const Token &t) {
   os << t.strToken;
@@ -118,46 +180,6 @@ inline translator::Token expect(const translator::Token_map &tokens,
   }
 
   return tokens[i];
-}
-
-inline void parse(const translator::Token_map &tokens, std::map<std::string, size_t> labels, mc::x86_64::machine_code bytes) {
-  for (size_t i = 0; i < tokens.size(); i++) {
-    const translator::Token &t = tokens[i];
-
-    switch (t.token_type) {
-    case translator::TokenType::INT:
-      break;
-    case translator::TokenType::SMICOL:
-      break;
-    case translator::TokenType::OUT:
-      i++;
-      translator::expect(tokens, translator::TokenType::L_BRACKET, i);
-      i++;
-      translator::expect(tokens, translator::TokenType::R_BRACKET, i);
-      i++;
-      translator::expect(tokens, translator::TokenType::SMICOL, i);
-      i++;
-
-      break;
-
-    case translator::TokenType::IDENTIFIER: {
-      std::string ident_name = tokens[i].strToken;
-      i++;
-      expect(tokens, translator::TokenType::COLOMN, i);
-
-      for (size_t j = i; j < tokens.size(); i++) {
-
-        labels[ident_name] = bytes.size();
-        
-      }
-
-      break;
-    }
-
-    default:
-      throw CompilerErr("unexpected token: " + t.strToken);
-    }
-  }
 }
 
 } // namespace translator

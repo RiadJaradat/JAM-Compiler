@@ -1,35 +1,51 @@
 
 
-#include <cstdint>
-#include <fstream>
+#include <cstddef>
 #include <iostream>
-#include <vector>
+#include <fstream>
+#include <string>
 
-#include "machine-code.hpp"
+#include "exception.hpp"
+#include "front_end.hpp"
+#include "AST.hpp"
 
-std::vector<uint8_t> bytes;
+std::ifstream file("input.j");
 
-int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    std::cerr << "JLD: No input File" << std::endl;
+int main() {
+
+  translator::Token_map tm = translator::getTokens(file);
+
+  while (!tm.isAtEnd()) {
+
+    switch (tm.current().token_type) {
+      case translator::TokenType::OUT: {
+
+        tm.expect(translator::TokenType::L_BRACKET);
+        translator::Token value = tm.expect(translator::TokenType::STRING_LITIRAL);
+        tm.expect(translator::TokenType::R_BRACKET);
+
+        stringExpr* string = new stringExpr(value.strToken);
+        printStmt* print = new printStmt(string);
+        tm.expect(translator::TokenType::SMICOL);
+        tm.advance();
+      }
+      case translator::TokenType::INT: {
+        translator::Token name = tm.expect(translator::TokenType::IDENTIFIER);
+        tm.expect(translator::TokenType::EQU);
+        translator::Token val = tm.expect(translator::TokenType::INT_LITIRAL);
+
+        intLitiralExpr* intval = new intLitiralExpr(std::stoi(val.strToken));
+        intStmt* intsmt = new intStmt(name.strToken, intval);
+
+      }
+
+      default: {
+        throw CompilerErr("unexpected token: " + tm.current().strToken + " \n  * at word position: " + std::to_string(tm.current_i));
+      }
+    }
+
   }
 
-  std::fstream file(argv[1], std::ios::in | std::ios::binary);
-  if (!file)
-    std::cerr << "JLD: failed to open file" << std::endl;
+  
 
-  unsigned char byte;
-
-  while (file.read(reinterpret_cast<char *>(&byte), 1))
-    bytes.push_back(byte);
-
-  bytes.insert(bytes.begin(), {0x7F, 'E', 'L', 'F'});
-
-  for (auto byte : bytes)
-    std::printf("%02X ", byte);
-
-  std::printf("\n");
-
-  file.close();
-  return 0;
 }
