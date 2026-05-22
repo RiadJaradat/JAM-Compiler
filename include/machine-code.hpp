@@ -2,7 +2,6 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <map>
 #include <stdexcept>
 #include <vector>
 
@@ -202,28 +201,4 @@ public:
   }
 };
 } // namespace x86_64
-
-class generall_emmiter {
-private:
-  std::map<std::vector<uint8_t>, size_t> program_table;
-  std::map<size_t, size_t> ptr_size;
-  std::map<size_t, size_t> Addresses;
-  std::map<std::string, size_t> labels;
-
-public:
-  mc::x86_64::ELF elf;
-  mc::x86_64::Header program_header;
-  mc::x86_64::machine_code code_bytes;
-  mc::x86_64::machine_code data_bytes;
-
-  generall_emmiter() {
-    
-  };
-
-  void genLabel(std::string label_name) {
-    labels[label_name] = code_bytes.size();
-  }
-
-};
-
 } // namespace mc

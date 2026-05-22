@@ -1,50 +1,26 @@
 
 
-#include <cstddef>
-#include <cstdint>
-#include <cstdio>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <stdexcept>
-#include <vector>
+#include "generall_emmiter.hpp"
+#include "exception.hpp"
 
-#include "front_end.hpp"
-#include "helper.hpp"
-#include "machine-code.hpp"
-
-std::ofstream bin_file("code", std::ios::binary);
-
-mc::x86_64::ELF elf;
-mc::x86_64::Header program_header;
-mc::x86_64::machine_code code_bytes;
-mc::x86_64::machine_code data_bytes;
-
-std::map<std::vector<uint8_t>, size_t> program_table;
-std::map<size_t, size_t> ptr_size;
-std::map<size_t, size_t> Addresses;
-std::map<std::string, size_t> labels;
+std::ofstream file;
 
 int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    throw std::runtime_error("JAM: No input file");
-  }
+  if (argc < 2)
+    throw CompilerErr("No input File");
 
-  std::ifstream scource(argv[1]);
 
-  translator::Token_map tokens = translator::getTokens(scource);
-  translator::parse(tokens);
+  file.open(argv[1]);
+  if (!file)
+    throw CompilerErr("File does not exists");
 
-  labels["_start"] = code_bytes.size();
-  helper::__print(code_bytes, program_table, ptr_size, "Hello, World!\n");
-  helper::__exit(code_bytes, 0);
+  Emmiter emmiter;
 
-  helper::patch(code_bytes, data_bytes, program_table, ptr_size, Addresses,
-                program_header);
-  mc::x86_64::machine_code bytes =
-      helper::combin_excutable(elf, program_header, code_bytes, data_bytes);
-  helper::write(bin_file, bytes);
+  emmiter.genLabel("_start");
+  emmiter.print("hello, world!");
+  emmiter.end(0);
+  emmiter.genExcutable(file, argv[1],CLOSE);
 
-  bin_file.close();
   return 0;
+
 }

@@ -1,6 +1,9 @@
 #pragma once
 
+#include "exception.hpp"
+#include "machine-code.hpp"
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <map>
 #include <string>
@@ -16,17 +19,22 @@ enum TokenType {
   R_BRACKET,
   L_BRACKET,
   R_BRACE,
-  L_BRACE
+  L_BRACE,
+  COLOMN
 };
+
+inline std::vector<std::function<void()>> generationFucntions;
 
 inline std::map<std::string, TokenType> Token_Tree = {
     {"int", TokenType::INT},     {"=", TokenType::EQU},
     {";", TokenType::SMICOL},    {"print", TokenType::OUT},
     {")", TokenType::R_BRACKET}, {"(", TokenType::L_BRACKET},
-    {"}", TokenType::R_BRACE},   {"{", TokenType::L_BRACE}};
+    {"}", TokenType::R_BRACE},   {"{", TokenType::L_BRACE},
+    {":", TokenType::COLOMN}};
 
 inline bool isSymbol(char c) {
-  return c == ';' || c == '=' || c == ')' || c == '(' || c == '}' || c == '{';
+  return c == ';' || c == '=' || c == ')' || c == '(' || c == '}' || c == '{' ||
+         c == ';';
 }
 
 class Token {
@@ -98,19 +106,21 @@ inline Token_map getTokens(std::ifstream &FILE) {
 }
 
 inline translator::Token expect(const translator::Token_map &tokens,
-                                translator::TokenType expected_type, size_t &i) {
+                                translator::TokenType expected_type,
+                                size_t &i) {
   if (i >= tokens.size()) {
     throw std::out_of_range("Token index out of range");
   }
 
   if (tokens[i].token_type != expected_type) {
-    throw std::runtime_error("Unexpected token: " + tokens[i].strToken + std::to_string(expected_type));
+    throw std::runtime_error("Unexpected token: " + tokens[i].strToken +
+                             std::to_string(expected_type));
   }
 
   return tokens[i];
 }
 
-inline void parse(const translator::Token_map &tokens) {
+inline void parse(const translator::Token_map &tokens, std::map<std::string, size_t> labels, mc::x86_64::machine_code bytes) {
   for (size_t i = 0; i < tokens.size(); i++) {
     const translator::Token &t = tokens[i];
 
@@ -129,6 +139,23 @@ inline void parse(const translator::Token_map &tokens) {
       i++;
 
       break;
+
+    case translator::TokenType::IDENTIFIER: {
+      std::string ident_name = tokens[i].strToken;
+      i++;
+      expect(tokens, translator::TokenType::COLOMN, i);
+
+      for (size_t j = i; j < tokens.size(); i++) {
+
+        labels[ident_name] = bytes.size();
+        
+      }
+
+      break;
+    }
+
+    default:
+      throw CompilerErr("unexpected token: " + t.strToken);
     }
   }
 }
